@@ -115,6 +115,7 @@ public class NFCWriteActivity extends AppCompatActivity {
 
 
                    Intent main = new Intent(this, MainActivity.class);
+                    main.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     main.putExtra(WRISUCESS, true);
                    this.startActivity(main);
 
