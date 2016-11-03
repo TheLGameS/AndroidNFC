@@ -1,7 +1,9 @@
-package br.carlos.nupeds.hellonfc;
+package br.labdata.hellonfc;
 
 import android.view.View;
 import android.widget.TextView;
+
+import br.carlos.nupeds.hellonfc.R;
 
 /**
  * Created by CARLOS.VILARINHO on 08/02/2016 15:32.

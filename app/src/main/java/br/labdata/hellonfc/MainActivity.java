@@ -1,4 +1,4 @@
-package br.carlos.nupeds.hellonfc;
+package br.labdata.hellonfc;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -16,10 +16,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import static br.carlos.nupeds.hellonfc.ApplicationSingleton.CONFIG_KEY;
-import static br.carlos.nupeds.hellonfc.ApplicationSingleton.WRISUCESS;
-import static br.carlos.nupeds.hellonfc.ApplicationSingleton.LOG;
-import static br.carlos.nupeds.hellonfc.ApplicationSingleton.bancoNoSql;
+import br.carlos.nupeds.hellonfc.R;
+
+import static br.labdata.hellonfc.ApplicationSingleton.CONFIG_KEY;
+import static br.labdata.hellonfc.ApplicationSingleton.LOG;
+import static br.labdata.hellonfc.ApplicationSingleton.WRISUCESS;
+import static br.labdata.hellonfc.ApplicationSingleton.bancoNoSql;
 
 public class MainActivity extends AppCompatActivity {
 

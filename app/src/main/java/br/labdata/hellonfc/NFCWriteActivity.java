@@ -1,4 +1,4 @@
-package br.carlos.nupeds.hellonfc;
+package br.labdata.hellonfc;
 
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -21,8 +21,10 @@ import android.widget.TextView;
 
 import java.io.IOException;
 
-import static br.carlos.nupeds.hellonfc.ApplicationSingleton.LOG;
-import  static br.carlos.nupeds.hellonfc.ApplicationSingleton.WRISUCESS;
+import br.carlos.nupeds.hellonfc.R;
+
+import static br.labdata.hellonfc.ApplicationSingleton.LOG;
+import static br.labdata.hellonfc.ApplicationSingleton.WRISUCESS;
 
 public class NFCWriteActivity extends AppCompatActivity {
 

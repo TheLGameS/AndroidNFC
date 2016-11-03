@@ -1,4 +1,4 @@
-package br.carlos.nupeds.hellonfc;
+package br.labdata.hellonfc;
 
 import android.app.Application;
 import android.content.SharedPreferences;

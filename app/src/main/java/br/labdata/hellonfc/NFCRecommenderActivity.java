@@ -1,4 +1,4 @@
-package br.carlos.nupeds.hellonfc;
+package br.labdata.hellonfc;
 
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import br.carlos.nupeds.hellonfc.R;
 
 public class NFCRecommenderActivity extends AppCompatActivity {
 

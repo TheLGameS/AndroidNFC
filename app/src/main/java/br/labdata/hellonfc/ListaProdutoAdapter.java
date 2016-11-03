@@ -1,4 +1,4 @@
-package br.carlos.nupeds.hellonfc;
+package br.labdata.hellonfc;
 
 import android.content.Context;
 import android.support.design.widget.Snackbar;
@@ -12,6 +12,8 @@ import android.widget.Filterable;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
+
+import br.carlos.nupeds.hellonfc.R;
 
 /**
  * Created by Carlos Eduardo Vilarinho on 23/06/2015 13:35.

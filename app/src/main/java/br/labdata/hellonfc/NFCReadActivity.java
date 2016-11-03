@@ -1,4 +1,4 @@
-package br.carlos.nupeds.hellonfc;
+package br.labdata.hellonfc;
 
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -17,7 +17,9 @@ import android.widget.TextView;
 
 import java.util.Arrays;
 
-import static br.carlos.nupeds.hellonfc.ApplicationSingleton.LOG;
+import br.carlos.nupeds.hellonfc.R;
+
+import static br.labdata.hellonfc.ApplicationSingleton.LOG;
 
 public class NFCReadActivity extends AppCompatActivity {
 
