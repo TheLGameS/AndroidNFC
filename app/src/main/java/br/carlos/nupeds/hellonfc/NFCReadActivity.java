@@ -18,8 +18,9 @@ import android.widget.TextView;
 
 import java.util.Arrays;
 
-public class NFCReadActivity extends AppCompatActivity {
+import static br.carlos.nupeds.hellonfc.ApplicationSingleton.LOG;
 
+public class NFCReadActivity extends AppCompatActivity {
 
     private TextView mTextView;
     private NfcAdapter mNfcAdapter;
@@ -27,39 +28,36 @@ public class NFCReadActivity extends AppCompatActivity {
     private IntentFilter[] mIntentFilters;
     private String[][] mNFCTechLists;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.read_nfc);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mTextView = (TextView)findViewById(R.id.tv);
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
         if (mNfcAdapter != null) {
-            mTextView.setText("Read an NFC tag");
+            mTextView.setText("Aguardando Leitura de Tag");
         } else {
-            mTextView.setText("This phone is not NFC enabled.");
+            mTextView.setText("Este dispositivo não tem suporte a NFC");
         }
 
-        // create an intent with tag data and deliver to this activity
         mPendingIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
 
-        // set an intent filter for all MIME data
         IntentFilter ndefIntent = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
         try {
             ndefIntent.addDataType("*/*");
             mIntentFilters = new IntentFilter[] { ndefIntent };
         } catch (Exception e) {
-            Log.e(HelloNFC.LOG, e.toString());
+            Log.e(LOG, e.toString());
         }
 
         mNFCTechLists = new String[][] { new String[] { NfcF.class.getName() } };
-
-
     }
 
 
@@ -67,14 +65,12 @@ public class NFCReadActivity extends AppCompatActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-
         String action = intent.getAction();
         Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
         String s = action + "\n\n" + tag.toString();
         String valorSensor = "";
 
-        // parse through all NDEF messages and their records and pick text type only
         Parcelable[] data = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
         if (data != null) {
             try {
@@ -102,38 +98,14 @@ public class NFCReadActivity extends AppCompatActivity {
         }
 
 
-        Log.e(HelloNFC.LOG,s);
+        Log.e(LOG,s);
 
         mTextView.setText(valorSensor);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
     protected void onPause() {
         super.onPause();
-
         if (mNfcAdapter != null)
             mNfcAdapter.disableForegroundDispatch(this);
     }
@@ -141,10 +113,17 @@ public class NFCReadActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-
         if (mNfcAdapter != null)
             mNfcAdapter.enableForegroundDispatch(this, mPendingIntent, mIntentFilters, mNFCTechLists);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

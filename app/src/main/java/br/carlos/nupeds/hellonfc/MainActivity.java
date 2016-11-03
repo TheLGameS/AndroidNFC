@@ -1,15 +1,22 @@
 package br.carlos.nupeds.hellonfc;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import static br.carlos.nupeds.hellonfc.ApplicationSingleton.CONFIG_KEY;
+import static br.carlos.nupeds.hellonfc.ApplicationSingleton.bancoNoSql;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +30,12 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.startActivity(read);
             }
         });
+
 
 
         FloatingActionButton fabW = (FloatingActionButton) findViewById(R.id.fabW);
@@ -44,15 +58,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton fabRec = (FloatingActionButton) findViewById(R.id.fabRec);
+        fabRec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Snackbar.make(view,"Buscando Recomendações",Snackbar.LENGTH_LONG).show();
+
+            }
+        });
 
         mTextView = (TextView)findViewById(R.id.verificarSensor);
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
         if (mNfcAdapter != null) {
-            mTextView.setText("Read an NFC tag");
+            mTextView.setText("Selecione uma Ação");
+            fab.setEnabled(true);
+            fabW.setEnabled(true);
+            fabRec.setEnabled(true);
         } else {
-            mTextView.setText("This phone is not NFC enabled.");
+            mTextView.setText("Este dispositivo não tem suporte a NFC");
+            fab.setEnabled(false);
+            fabW.setEnabled(false);
+            fabRec.setEnabled(false);
         }
     }
 
@@ -66,7 +95,35 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
          int id = item.getItemId();
         if (id == R.id.action_settings) {
+
+
+            final Dialog dialog = new Dialog(MainActivity.this);
+            dialog.setContentView(R.layout.dialog_cfg);
+            dialog.setTitle("Microservice SWARM");
+            dialog.show();
+
+            final TextView inputCfg = (TextView) dialog.findViewById(R.id.edt_conf);
+
+            String cfg = bancoNoSql.getString(CONFIG_KEY, null);
+            inputCfg.setText( cfg!=null ? cfg : "");
+
+
+            inputCfg.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                        SharedPreferences.Editor editor = bancoNoSql.edit();
+                        editor.putString(CONFIG_KEY, inputCfg.getText().toString().toUpperCase());
+                        editor.commit();
+                        dialog.dismiss();
+                        return true;
+                    }
+                    return false;
+                }
+            });
+
             return true;
+
         }
         return super.onOptionsItemSelected(item);
     }
