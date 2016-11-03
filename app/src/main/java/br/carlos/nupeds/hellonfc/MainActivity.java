@@ -63,7 +63,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Snackbar.make(view,"Buscando Recomendações",Snackbar.LENGTH_LONG).show();
+                Intent recommender = new Intent(MainActivity.this, NFCRecommenderActivity.class);
+                MainActivity.this.startActivity(recommender);
+
 
             }
         });
@@ -81,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             mTextView.setText("Este dispositivo não tem suporte a NFC");
             fab.setEnabled(false);
             fabW.setEnabled(false);
-            fabRec.setEnabled(false);
+           fabRec.setEnabled(false);
         }
     }
 
