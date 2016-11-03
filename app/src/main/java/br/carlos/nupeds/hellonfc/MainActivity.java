@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +17,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import static br.carlos.nupeds.hellonfc.ApplicationSingleton.CONFIG_KEY;
+import static br.carlos.nupeds.hellonfc.ApplicationSingleton.WRISUCESS;
+import static br.carlos.nupeds.hellonfc.ApplicationSingleton.LOG;
 import static br.carlos.nupeds.hellonfc.ApplicationSingleton.bancoNoSql;
 
 public class MainActivity extends AppCompatActivity {
@@ -128,5 +131,21 @@ public class MainActivity extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    protected void onResume() {
+        try{
+            if(getIntent().getExtras().getBoolean(WRISUCESS, false)){
+                Snackbar.make(mTextView,"Gravação efetuada com Sucesso!",Snackbar.LENGTH_LONG).show();
+                getIntent().removeExtra(WRISUCESS);
+            }
+        }catch (NullPointerException e){
+            Log.e(LOG,e.getMessage());
+        }
+
+
+        super.onResume();
     }
 }

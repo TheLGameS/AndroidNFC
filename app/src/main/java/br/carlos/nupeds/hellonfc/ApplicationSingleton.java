@@ -10,6 +10,7 @@ import android.content.res.Configuration;
 public class ApplicationSingleton extends Application {
 
     public static final String LOG = "LOG_NFC";
+    public static final String WRISUCESS = "WSUC";
     public static final  String CONFIG_KEY = "configuracao";
     private static final  String NO_SQL = "recomendacaoNoSqlDB";
     public static  SharedPreferences bancoNoSql;
